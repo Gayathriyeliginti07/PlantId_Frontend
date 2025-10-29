@@ -116,7 +116,8 @@ export function LeafUpload({ onBack }) {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
 
-  const baseURL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+  // const baseURL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+  const baseURL = import.meta.env.VITE_BACKEND_URL;
 
   const handleFile = (f) => {
     setFile(f);
@@ -212,4 +213,5 @@ export function LeafUpload({ onBack }) {
     </div>
   );
 }
+
 
