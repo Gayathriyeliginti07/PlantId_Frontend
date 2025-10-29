@@ -226,6 +226,7 @@ export function LeafUpload({ onBack }) {
   const [result, setResult] = useState(null);
 
   const baseURL = import.meta.env.VITE_BACKEND_URL;
+  await axios.post(`${baseURL}/predict_leaf`, formData);
 
   const handleFile = (f) => {
     setFile(f);
@@ -320,5 +321,6 @@ export function LeafUpload({ onBack }) {
     </div>
   );
 }
+
 
 
