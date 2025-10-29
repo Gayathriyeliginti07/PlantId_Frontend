@@ -236,6 +236,7 @@
 //     </div>
 //   );
 // }
+// BarkUpload.jsx (updated)
 import { useState } from "react";
 import axios from "axios";
 import { Button } from "./ui/button";
@@ -290,35 +291,16 @@ export function BarkUpload({ onBack }) {
       <Button variant="ghost" className="mb-4 text-gray-600" onClick={onBack}>
         <ArrowLeft className="w-4 h-4 mr-2" /> Back
       </Button>
-      <div
-        onDragEnter={handleDrag}
-        className={`w-[28rem] p-8 rounded-xl bg-white shadow text-center transition border-2 relative ${
-          dragActive ? "border-green-500" : "border-dashed border-gray-300"
-        }`}
-      >
-        <input
-          type="file"
-          accept="image/*"
-          className="hidden"
-          id="bark-upload"
-          onChange={(e) => handleFile(e.target.files[0])}
-        />
+      <div onDragEnter={handleDrag} className={`w-[28rem] p-8 rounded-xl bg-white shadow text-center transition border-2 relative ${dragActive ? "border-green-500" : "border-dashed border-gray-300"}`}>
+        <input type="file" accept="image/*" className="hidden" id="bark-upload" onChange={(e) => handleFile(e.target.files[0])} />
         <label htmlFor="bark-upload" className="block cursor-pointer py-10 text-lg">
           <Upload className="mx-auto mb-3" />
           {file ? file.name : "+ Drag & Drop or Click to Upload Bark Image"}
         </label>
         {dragActive && (
-          <div
-            className="absolute inset-0"
-            onDragEnter={handleDrag}
-            onDragLeave={handleDrag}
-            onDragOver={handleDrag}
-            onDrop={handleDrop}
-          />
+          <div className="absolute inset-0" onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop} />
         )}
-        {preview && (
-          <img src={preview} className="w-48 mx-auto mt-4 rounded-lg" />
-        )}
+        {preview && <img src={preview} className="w-48 mx-auto mt-4 rounded-lg" />}
         <Button className="mt-4 bg-green-600" onClick={handleUpload} disabled={loading}>
           {loading ? "Predicting..." : "Predict"}
         </Button>
@@ -332,26 +314,17 @@ export function BarkUpload({ onBack }) {
           <p><strong>Uses:</strong> {result.best_prediction?.uses || "-"}</p>
           <p><strong>Origin:</strong> {result.best_prediction?.origin || "-"}</p>
 
-          {result.predictions && (
-            <>
-              <h2 className="text-xl font-semibold mt-4 mb-2">Top 5 Predictions:</h2>
-              <ul className="list-disc ml-4">
-                {result.predictions.map((p, index) => (
-                  <li key={index}>
-                    {index + 1}) {p.scientific_name} — {p.confidence.toFixed(4)}
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
+          <h2 className="text-xl font-semibold mt-4 mb-2">Top 5 Predictions:</h2>
+          <ul className="list-disc ml-4">
+            {result.top_predictions?.map((p, index) => (
+              <li key={index}>
+                {index + 1}) {p.scientific_name} — {p.confidence.toFixed(4)}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
-
-      {result && result.error && (
-        <p className="text-red-600 mt-4">{result.error}</p>
-      )}
+      {result && result.error && <p className="text-red-600 mt-4">{result.error}</p>}
     </div>
   );
 }
-
-
